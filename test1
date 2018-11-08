@@ -1,0 +1,204 @@
+        
+  void Start(){      
+        initiative[0] = 13;
+        initiative[1] = 13;
+        initiative[2] = 13;
+        initiative[3] = 14;
+        initiative[4] = 13;
+        initiative[5] = 15;
+        initiative[6] = 12;
+        initiative[7] = 18;
+
+        for (int a = 0; a < initiative.Length; a++)
+        {
+            for (int b = 0; b < initiative.Length; b++)
+            {
+                if (initiative[a] == initiative[b] && a != b)
+                {
+                    initiative[b]--;
+                }
+            }
+        }
+
+        for (int i = 0; i < initiative.Length; i++)
+        {
+            for (int j = 0; j < initiative.Length; j++)
+            {
+                if (initiative[i] < initiative[j])
+                {
+                    whoFirst[i]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < whoFirst.Length; i++)
+        {
+            whenAttack[whoFirst[i]] = i;
+        }
+        
+    }
+        public void TurnRoll()
+    {
+
+        if (whosTurn >= 8)
+        {
+            whosTurn = 0;
+        }
+
+        for (int i = whosTurn; i < whenAttack.Length; i++)
+        {
+            switch (whenAttack[i])
+            {
+                case 0:
+                    character = 0;
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (otherScriptPartyInfo.playerClass.Hp > 0 && char1DebuffType[0] != 3)
+                    {
+                        battleText.text += ("\nplayer 1");
+                        StartCoroutine(EndTurn());
+                        return;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                case 1:
+                    character = 1;
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (otherScriptPartyInfo.NPC1Class.Hp > 0 && char2DebuffType[0] != 3)
+                    {
+                       
+                        // allButtons.SetActive (true);
+                        battleText.text += ("\nNPC1");
+                        StartCoroutine(EndTurn());
+                        return;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                case 2:
+                    character = 2;
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (otherScriptPartyInfo.NPC2Class.Hp > 0)
+                    {
+                    
+                    //allButtons.SetActive (true);
+                    battleText.text += ("\nNPC2");
+                    StartCoroutine(EndTurn());
+                    return;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                case 3:
+                    character = 3;
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (otherScriptPartyInfo.NPC3Class.Hp > 0)
+                    {
+                        character = 3;
+                        whosTurn++;
+                        if (whosTurn >= 8)
+                        {
+                            whosTurn = 0;
+                        }
+                        //allButtons.SetActive (true);
+                        battleText.text += ("\nNPC3");
+                        StartCoroutine(EndTurn());
+                        return;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                case 4:
+                    character = 4;
+                    whosTurn++;
+                    
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+
+                    if (enemyHP[0] > 0)
+                    {
+                        battleText.text += ("\nEnemy1");
+                        EnemyAttack();
+
+
+                    }
+                    StartCoroutine(EndTurn());
+                    break;
+
+                case 5:
+                    character = 5;
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (enemyHP[1] > 0)
+                    {
+                        battleText.text += ("\nEnemy2");
+                        EnemyAttack();
+                    }
+                    StartCoroutine(EndTurn());
+                    break;
+
+                case 6:
+                    character = 6;
+                    Debug.Log("Enemy3");
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (enemyHP[2] > 0)
+                    {
+                        battleText.text += ("\nEnemy3");
+                        EnemyAttack();
+                    }
+                    StartCoroutine(EndTurn());
+                    break;
+
+                case 7:
+                    character = 7;
+                    Debug.Log("Enemy4");
+                    whosTurn++;
+                    if (whosTurn >= 8)
+                    {
+                        whosTurn = 0;
+                    }
+                    if (enemyHP[3] > 0)
+                    {
+                        battleText.text += ("\nEnemy4");
+                        EnemyAttack();
+                    }
+                    StartCoroutine(EndTurn());
+                    break;
+
+
+            }
+        }
+
+        TurnRoll();
+
+
+    }
